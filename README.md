@@ -183,7 +183,7 @@ Para ejecutar las pruebas nos bastaría con ejecutar en nuestra terminal
 $ go test -v
 ```
 
-Adicionalmente, contamos con una colección postman (**api.meli.test.postman_collection.json**) que contienen las peticiones que podríamos ejecutar de acuerdo al desarrollo de nuestro proyecto, el cual está ubicado en la carpeta **postman/** en el directorio raíz del proeycto.
+Adicionalmente, contamos con una colección postman (**api.meli.test.postman_collection.json**) que contienen las peticiones que podríamos ejecutar de acuerdo al desarrollo de nuestro proyecto, el cual está ubicado en la carpeta **postman/** en el directorio raíz del proeycto. **IMPORTANTE** tener en cuenta que en la colección postman están configuradas las variables para que la url del api apunte al cloud o a nuestro entorno local de desarrollo.
 
 ---
 
