@@ -177,10 +177,22 @@ $ go run main.go
 
 Esto lo que hará será levantar un servidor que escuchará las peticiones que le enviemos. Para detener la ejecución, bastaría con presionar **Ctrl+C**.
 
-Para ejecutar las pruebas nos bastaría con ejecutar en nuestra terminal
+Para ejecutar las pruebas y visualizar la cobertura del código de las mismas, bastaría con ejecutar en nuestra terminal
 
 ```
-$ go test -v
+$ go test ./... --cover
+```
+
+También existe una manera de ejecutar la cobertura de código, obteniendo por función defina por cada test en el proyecto, cuánto es su porcentaje de cobertura. Desde la ráiz del proyecto ejecutamos
+
+```
+$ PKG_LIST=$(go list ./... | grep -v /vendor/ | tr '\n' ' ') & go test -covermode=count -coverprofile coverage $PKG_LIST
+```
+
+Y por último ejecutamos **go tools usando** el perfil "coverage" previamente creado
+
+```
+$ go tool cover -func=coverage
 ```
 
 Adicionalmente, contamos con una colección postman (**api.meli.test.postman_collection.json**) que contienen las peticiones que podríamos ejecutar de acuerdo al desarrollo de nuestro proyecto, el cual está ubicado en la carpeta **postman/** en el directorio raíz del proeycto. **IMPORTANTE** tener en cuenta que en la colección postman están configuradas las variables para que la url del api apunte al cloud o a nuestro entorno local de desarrollo.

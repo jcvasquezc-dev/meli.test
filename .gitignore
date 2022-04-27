@@ -1,2 +1,3 @@
 meli.test
-xmen.db
+*.db
+coverage

@@ -5,13 +5,13 @@ import (
 )
 
 func initRoutes() {
-	http.HandleFunc("/", index)
+	http.HandleFunc("/", Index)
 
-	http.HandleFunc("/mutant", verifyDnaSequence)
+	http.HandleFunc("/mutant", VerifyDnaSequence)
 
-	http.HandleFunc("/mutant/", verifyDnaSequence)
+	http.HandleFunc("/mutant/", VerifyDnaSequence)
 
-	http.HandleFunc("/stats", getStats)
+	http.HandleFunc("/stats", GetStats)
 
-	http.HandleFunc("/stats/", getStats)
+	http.HandleFunc("/stats/", GetStats)
 }

@@ -34,27 +34,6 @@ func IsMutant(dna *dto.Dna) (bool, error) {
 	return dna.IsMutant, nil
 }
 
-// IsMutantTestMethod is a public method that determine if a dna sequence comes from a human or mutant.
-// This method should be used for testing purpose.
-// It returns true if the dna sequence belongs to a mutant or a human; return false otherwise. Also return the number of matches founds. Also return an error if exists.
-func IsMutantTestMethod(dna *dto.Dna) (bool, int, error) {
-	if !hasValidElements(dna.Sequence) {
-		return false, 0, errors.New("the DNA sequence comes from an superior species because has unrecognized values")
-	}
-
-	formatedDna, er := getFormatedDna(dna.Sequence)
-
-	// dna is corrupted by size (array dimensions), or for absence of some elements
-	if er != nil {
-		return false, 0, er
-	}
-
-	matchesFound := doDnaAnalysis(formatedDna)
-	dna.IsMutant = hasMinimumMatchesRequired(matchesFound)
-
-	return dna.IsMutant, matchesFound, nil
-}
-
 // getFormatedDna is a private method that converts the dna sequence received into a formated dimensional matrix.
 // All the validations needed for the dna sequence are mades here. When some validations are mades and fails, a error is returned.
 // It returns a multidimensional array representation of the original dna sequence.
@@ -108,6 +87,10 @@ func getFormatedDna(dnaSequence []string) ([][]string, error) {
 // It returns true if the complete dna sequence only contains valid elements; return false otherwise.
 func hasValidElements(dnaSequence []string) bool {
 	dnaSequenceValues := strings.ToUpper(strings.Join(dnaSequence, ""))
+
+	if len(dnaSequenceValues) == 0 {
+		return false
+	}
 
 	for _, val := range allowedDnaValues {
 		dnaSequenceValues = strings.ReplaceAll(dnaSequenceValues, string(val), "")
@@ -163,7 +146,7 @@ func horizontalSearch(formatedDna [][]string, matchesFound int) int {
 	columnCount := len(formatedDna[0])
 
 	if columnCount < matchSequenceCount {
-		return 0
+		return matchesFound
 	}
 
 	for _, row := range formatedDna {
@@ -185,7 +168,7 @@ func verticalSearch(formatedDna [][]string, matchesFound int) int {
 	columnCount := len(formatedDna[0])
 
 	if rowCount < matchSequenceCount {
-		return 0
+		return matchesFound
 	}
 
 	for j := 0; j < columnCount; j++ {
@@ -213,7 +196,7 @@ func obliqueSearch(formatedDna [][]string, matchesFound int) int {
 	columnCount := len(formatedDna[0])
 
 	if rowCount < matchSequenceCount || columnCount < matchSequenceCount {
-		return 0
+		return matchesFound
 	}
 
 	colummnTopIndex := columnCount - matchSequenceCount

@@ -11,15 +11,15 @@ import (
 	"meli.test/dtos"
 )
 
-func index(w http.ResponseWriter, r *http.Request) {
+func Index(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotFound)
 	fmt.Fprintf(w, "404: Method not found")
 }
 
-func verifyDnaSequence(w http.ResponseWriter, r *http.Request) {
+func VerifyDnaSequence(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		w.WriteHeader(http.StatusMethodNotAllowed)
-		fmt.Fprintf(w, "Method not allowed %s", r.Method)
+		log.Println("Method not allowed /mutant - ", r.Method)
 		return
 	}
 
@@ -41,7 +41,7 @@ func verifyDnaSequence(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, "reason -> %s", err.Error())
+		log.Println("reason -> ", err.Error())
 		return
 	}
 
@@ -52,10 +52,10 @@ func verifyDnaSequence(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func getStats(w http.ResponseWriter, r *http.Request) {
+func GetStats(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		w.WriteHeader(http.StatusMethodNotAllowed)
-		fmt.Fprintf(w, "Method not allowed")
+		log.Println("Method not allowed /stats - ", r.Method)
 		return
 	}
 

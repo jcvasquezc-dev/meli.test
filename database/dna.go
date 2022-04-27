@@ -98,10 +98,7 @@ func GetDnaStats() *dto.DnaStats {
 	p_mutant_count := 0
 	p_human_count := 0
 
-	if err := row.Scan(&p_mutant_count, &p_human_count); err == sql.ErrNoRows {
-		log.Println("no stats found")
-		return nil
-	}
+	_ = row.Scan(&p_mutant_count, &p_human_count)
 
 	ratio := calculateRatio(p_mutant_count, p_human_count)
 
